@@ -1,0 +1,1 @@
+BASE_PATH = '/user/guy%20serfaty/dash-boilerplate-exmp'
