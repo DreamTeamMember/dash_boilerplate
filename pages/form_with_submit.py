@@ -1,7 +1,5 @@
 import dash_bootstrap_components as dbc
 from dash import Input, Output, html, State
-from dash.exceptions import PreventUpdate
-import re
 
 styles = {
     'width': '300px',
