@@ -1,5 +1,8 @@
 import dash_bootstrap_components as dbc
 from dash import Input, Output, html, State
+from dash.exceptions import PreventUpdate
+import requests
+import json
 
 styles = {
     'width': '300px',
@@ -38,27 +41,36 @@ form_with_submit = html.Div([
 ])
 
 def get_form_with_submit(app):
-    # on click handler for the submit button - currently when valid we only display the form values instead of an api call
-    app.clientside_callback(
-        """
-        function(clickNumber, passwordValid, emailValid, passwordTouched, emailTouched, email, password) {
-            if (!passwordValid || !emailValid || !passwordTouched || !emailTouched || !clickNumber) return [""];
-            const postObject = { email, password };
-            return [`submitting object: ${JSON.stringify(postObject, null, 2)}`];
-        }
-        """,
-        [Output("form-output", "children")],
+    @app.callback(
+        Output("form-output", "children"),
         [
-         Input("submit-button", 'n_clicks'),
-         State("password-input", "valid"),
-         State("email-input", "valid"),
-         State("password-input", "touched"),
-         State("email-input", "touched"),
-         State("email-input", "value"),
-         State("password-input", "value"),
+            Input("submit-button", "n_clicks"),
+            State("password-input", "valid"),
+            State("email-input", "valid"),
+            State("password-input", "touched"),
+            State("email-input", "touched"),
+            State("email-input", "value"),
+            State("password-input", "value"),
         ]
     )
-    # check form validation - should separate this since each change in password input also triggers the validation of the email field
+    def submit_form(n_clicks, passwordValid, emailValid, passwordTouched, emailTouched, email, password):
+        if n_clicks in [0, None] or True in [not passwordValid, not emailValid, not passwordTouched, not emailTouched]:
+            raise PreventUpdate
+        else:
+            formData = json.dumps({ 'email': email, 'password': password })
+            data = requests.post(
+                "https://api.jsonbin.io/v3/b",
+                data = formData,
+                headers = {
+                    'content-type': 'application/json',
+                    'X-Master-Key': '$2b$10$yZCkmPZ4pIb.wAyWWhr4pOKqrg0Ysvm5ylEeIme5iUwoSxmjxsdfa'
+                },
+            )
+            if data.status_code == requests.codes.ok:
+                jsonData =  json.loads(data.content)
+                return f"request succeeded with response: '{jsonData}', status: {data.status_code}"
+            return f"request to {api_url}/submit_form failed with status {data.status_code} {data.content}"
+
     app.clientside_callback(
         """
         function(email, password, passwordTouched, emailTouched, clickSubmitAmount) {
