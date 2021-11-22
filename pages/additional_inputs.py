@@ -1,9 +1,6 @@
 import dash_bootstrap_components as dbc
 from dash import Input, Output, html
 from pages.styles.common_styles import FlexDiv
-dbc.Textarea(className="mb-3", placeholder="A Textarea"),
-
-DIV_STYLE = { 'width' : '30%' }
 
 def FormDiv(children):
     return html.Div(children, style={ 'width': '30%' })
@@ -54,12 +51,39 @@ switches = FormDiv(
     ]
 )
 
+standalone_toggles = html.Div(
+    [
+        FlexDiv(
+            [
+                FormDiv(dbc.Checkbox(
+                    id="standalone-checkbox",
+                    label="This is a checkbox",
+                    value=False,
+                )),
+                FormDiv(dbc.Switch(
+                    id="standalone-switch",
+                    label="This is a toggle switch",
+                    value=False,
+                )),
+                FormDiv(dbc.RadioButton(
+                    id="standalone-radio",
+                    label="This is a radio button",
+                    value=False,
+                )),
+            ]
+        ),
+        html.P(id="standalone-radio-check-output"),
+    ]
+)
+
 additional_inputs = html.Div(
     [
-        html.H4("Additional Input components"),
+        html.H4("Additional input components"),
         dbc.Textarea(className="mb-3", placeholder="A Textarea"),
         dbc.Form([FlexDiv([radioitems, checklist, switches])]),
         html.P(id="radioitems-checklist-output"),
+        html.H6("Standalone toggles"),
+        standalone_toggles
     ]
 )
 
@@ -68,7 +92,7 @@ def get_additional_inputs(app):
         """
         function(radio_items_value, checklist_value, switches_value) {
             const RadioButtonOutput = `Selected Radio ${radio_items_value}`;
-            const ChecklistOutput = checklist_value.length ? `CheckList Items '${checklist_value.join(",")}'`: "no checklists selected";
+            const ChecklistOutput = checklist_value.length ? `CheckList Items '${checklist_value.join(",")}'`: "no checks selected";
             const SwitchOutput = switches_value.length ? `Selected Switches '${switches_value.join(",")}'`: "no switches selected";
             return [RadioButtonOutput,ChecklistOutput,SwitchOutput].join(". ");
         }
