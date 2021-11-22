@@ -33,7 +33,9 @@ def get_forms_page(app):
             dimensions_dropdown,
             filters_dropdown
         ], style={ 'display': 'flex' }),
+        html.Br(),
         get_additional_inputs(app),
+        html.Br(),
         get_form_with_submit(app)
     ])
 

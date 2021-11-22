@@ -1,4 +1,6 @@
 import dash_bootstrap_components as dbc
+import dash_core_components as dcc
+from datetime import date
 from dash import Input, Output, html
 from pages.styles.common_styles import FlexDiv
 
@@ -76,15 +78,39 @@ standalone_toggles = html.Div(
     ]
 )
 
+date_pickers = html.Div (
+    FlexDiv([
+        FormDiv(dcc.DatePickerSingle(
+            date='2017-06-21',
+            display_format='X'
+        )),
+        FormDiv(dcc.DatePickerSingle(
+            month_format='MMMM Y',
+            placeholder='MMMM Y',
+            date=date(2020, 2, 29)
+        )),
+        FormDiv(dcc.DatePickerRange(
+            end_date=date(2017, 6, 21),
+            display_format='MMMM Y, DD',
+            start_date_placeholder_text='MMMM Y, DD'
+        )),
+    ])
+)
+
 additional_inputs = html.Div(
     [
         html.H4("Additional input components"),
-        dbc.Textarea(className="mb-3", placeholder="A Textarea"),
+        html.H6("Date pickers"),
+        date_pickers,
+        html.Br(),
+        html.H6("Standalone toggles"),
+        standalone_toggles,
+        html.H6("Toggle lists"),
         dbc.Form([FlexDiv([radioitems, checklist, switches])]),
         html.P(id="radioitems-checklist-output"),
-        html.H6("Standalone toggles"),
-        standalone_toggles
-    ]
+        html.H6("Text inputs"),
+        FormDiv(dbc.Textarea(className="mb-3", placeholder="A Textarea")),
+    ], style={ 'maxWidth': '1000px' }
 )
 
 def get_additional_inputs(app):
