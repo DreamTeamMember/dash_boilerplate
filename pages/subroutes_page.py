@@ -12,13 +12,17 @@ top_nav_links = [
 
 topbar = create_top_bar(top_nav_links, id='subrouting_page')
 
-sub_routes = {
-    '/subrouting_examples': html.H4("Main route 🤴🏽"),
-    '/subrouting_examples/route2': html.H4("Sub route 2 👩🏽‍🌾"),
-    '/subrouting_examples/route3': html.H4("Sub route 3 🤶🏽")
-}
-
 subroutes_page = html.Div([
     topbar,
     PageDiv([html.Div(id='subrouter-content')])
 ])
+
+def get_subroutes_page():
+    return subroutes_page
+
+def get_subroutes():
+    return {
+        '/subrouting_examples': html.H4("Main route 🤴🏽"),
+        '/subrouting_examples/route2': html.H4("Sub route 2 👩🏽‍🌾"),
+        '/subrouting_examples/route3': html.H4("Sub route 3 🤶🏽")
+    }

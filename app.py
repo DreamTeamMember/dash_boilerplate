@@ -4,7 +4,7 @@ from psil_ui.router import init_router
 from psil_ui.sub_router import init_sub_router
 from psil_ui.sidebar import contentDiv
 from layout.sidebar import sidebar
-from routes import get_routes, sub_routes
+from routes import get_routes, get_sub_routes
 from dash import dcc
 from dash import html
 
@@ -13,5 +13,5 @@ def init_app(app):
 
     init_router(app, get_routes(app), base_url=BASE_PATH)
 
-    init_sub_router(app, sub_routes, BASE_PATH)
+    init_sub_router(app, get_sub_routes(app), BASE_PATH)
     return app

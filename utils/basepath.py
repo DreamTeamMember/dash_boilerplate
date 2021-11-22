@@ -1,1 +1,3 @@
-BASE_PATH = '/user/guy%20serfaty/dash-boilerplate-exmp'
+import os
+
+BASE_PATH = os.environ.get('HOST_PREVIEW', False) or '/user/guy%20serfaty/dash-boilerplate-example'

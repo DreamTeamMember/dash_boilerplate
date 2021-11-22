@@ -7,3 +7,6 @@ graph_page = PageDiv([
     html.H4("Graph Examples"),
     html.Div(dcc.Graph(figure=exampleGraph))
 ])
+
+def get_graph_page():
+    return graph_page
