@@ -27,7 +27,7 @@ for metric in metrics:
 def get_forms_page(app):
 
     forms_page = PageDiv([
-        html.H4("Dropdowns with relations"),
+        html.H5("Dropdowns with relations"),
         html.Form([
             metrics_dropdown,
             dimensions_dropdown,

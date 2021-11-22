@@ -99,7 +99,7 @@ date_pickers = html.Div (
 
 additional_inputs = html.Div(
     [
-        html.H4("Additional input components"),
+        html.H5("Additional input components"),
         html.H6("Date pickers"),
         date_pickers,
         html.Br(),
