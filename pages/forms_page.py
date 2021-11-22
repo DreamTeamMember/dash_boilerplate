@@ -2,6 +2,7 @@ from dash import html, Input, Output, State
 from pages.styles.common_styles import PageDiv
 from psil_ui.dropdown import create_dropdown
 from pages.form_with_submit import get_form_with_submit
+from pages.additional_inputs import get_additional_inputs
 
 metrics = [
     {'label': "DAU", 'value': "Related metrics: ARPDAU / PPU / Spinners"},
@@ -32,6 +33,7 @@ def get_forms_page(app):
             dimensions_dropdown,
             filters_dropdown
         ], style={ 'display': 'flex' }),
+        get_additional_inputs(app),
         get_form_with_submit(app)
     ])
 
