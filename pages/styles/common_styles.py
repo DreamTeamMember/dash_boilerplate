@@ -14,4 +14,4 @@ def PageDiv(children):
     return html.Div(children, id="main-content", style=PAGE_STYLE)
 
 def FlexDiv(children, width="100%"):
-    return html.Div(children, id="main-content", style=get_flex_style(width))
+    return html.Div(children, style=get_flex_style(width))
